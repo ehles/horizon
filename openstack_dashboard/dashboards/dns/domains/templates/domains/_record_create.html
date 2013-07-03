@@ -1,22 +1,24 @@
 {% extends "horizon/common/_modal_form.html" %}
 {% load i18n %}
 
-{% block form_id %}create_domain_form{% endblock %}
-{% block form_action %}{% url horizon:dns:domains:create %}{% endblock %}
+{% block form_id %}create_record_form{% endblock %}
+{% block form_action %}{% url horizon:dns:domains:record_create domain_id %}{% endblock %}
 {% block form_attrs %}enctype="multipart/form-data"{% endblock %}
 
-{% block modal-header %}{% trans "Create Domain" %}{% endblock %}
+{% block modal-header %}{% trans "Create A Record" %}{% endblock %}
 
 {% block modal-body %}
 <div class="left">
     <fieldset>
-    {% include "horizon/common/_form_fields.html" %}
+    <td class="actions">
+        {% include "dns/domains/_form_fields.html" %}
+    </td>
     </fieldset>
 </div>
 <div class="right">
     <h3>{% trans "Description:" %}</h3>
     <p>
-        {% trans "Specify an domain name, admin e-mail address and domain TTL." %}
+        {% trans "Specify an record type, name and value." %}
     </p>
 </div>
 {% endblock %}
@@ -24,7 +26,7 @@
 {% block modal-footer %}
   <input class="btn btn-primary pull-right"
          type="submit"
-         value="{% trans "Create Domain" %}" />
-  <a href="{% url horizon:dns:domains:index %}"
+         value="{% trans "Create Record" %}" />
+  <a href="{% url horizon:dns:domains:records domain_id %}"
      class="btn secondary cancel close">{% trans "Cancel" %}</a>
 {% endblock %}

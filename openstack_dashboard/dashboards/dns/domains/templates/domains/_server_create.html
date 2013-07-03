@@ -1,11 +1,11 @@
 {% extends "horizon/common/_modal_form.html" %}
 {% load i18n %}
 
-{% block form_id %}create_domain_form{% endblock %}
-{% block form_action %}{% url horizon:dns:domains:create %}{% endblock %}
+{% block form_id %}create_server_form{% endblock %}
+{% block form_action %}{% url horizon:dns:domains:server_create %}{% endblock %}
 {% block form_attrs %}enctype="multipart/form-data"{% endblock %}
 
-{% block modal-header %}{% trans "Create Domain" %}{% endblock %}
+{% block modal-header %}{% trans "Create A Server" %}{% endblock %}
 
 {% block modal-body %}
 <div class="left">
@@ -16,7 +16,7 @@
 <div class="right">
     <h3>{% trans "Description:" %}</h3>
     <p>
-        {% trans "Specify an domain name, admin e-mail address and domain TTL." %}
+        {% trans "Specify an server name." %}
     </p>
 </div>
 {% endblock %}
@@ -24,7 +24,7 @@
 {% block modal-footer %}
   <input class="btn btn-primary pull-right"
          type="submit"
-         value="{% trans "Create Domain" %}" />
+         value="{% trans "Create Server" %}" />
   <a href="{% url horizon:dns:domains:index %}"
      class="btn secondary cancel close">{% trans "Cancel" %}</a>
 {% endblock %}

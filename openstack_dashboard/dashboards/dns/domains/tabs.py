@@ -1,6 +1,8 @@
-# Copyright 2013 Hewlett-Packard Development Company, L.P.
+# vim: tabstop=4 shiftwidth=4 softtabstop=4
+
+# Copyright 2013 ASD Technologies, asdco.ru.
 #
-# Author: Kiall Mac Innes <kiall@hp.com>
+# Author: Denis Deryabin <dderyabin@asdco.ru>
 #
 # Licensed under the Apache License, Version 2.0 (the "License"); you may
 # not use this file except in compliance with the License. You may obtain
@@ -19,8 +21,7 @@ from django.utils.translation import ugettext_lazy as _
 from horizon import exceptions
 from horizon import tabs
 
-from openstack_dashboard import api
-from .tables import RecordsTable
+from openstack_dashboard.api import moniker
 
 
 class OverviewTab(tabs.Tab):
@@ -31,31 +32,24 @@ class OverviewTab(tabs.Tab):
     def get_context_data(self, request):
         domain_id = self.tab_group.kwargs['domain_id']
         try:
-            domain = api.moniker.domain_get(request, domain_id)
+            domain = moniker.domain_get(request, domain_id)
         except:
             redirect = reverse('horizon:dns:domains:index')
             exceptions.handle(self.request,
                               _('Unable to retrieve domain details.'),
                               redirect=redirect)
-        return {'domain': domain}
 
-
-class RecordsTab(tabs.TableTab):
-    name = _("Records")
-    slug = "records"
-    template_name = "dns/domains/_detail_records.html"
-    table_classes = [RecordsTable, ]
-
-    def get_context_data(self, request):
-        domain_id = self.tab_group.kwargs['domain_id']
         try:
-            records = api.moniker.record_list(request, domain_id)
+            records = moniker.records_list(request, domain_id)
         except:
             redirect = reverse('horizon:dns:domains:index')
             exceptions.handle(self.request,
-                              _('Unable to retrieve record list.'),
+                              _('Unable to retrieve domain details.'),
                               redirect=redirect)
-        return {'records': records}
+
+        print "RESULT: domain:%s, records:%s" % (domain, records, )
+        return {'domain' : domain,
+                'records': records,}
 
 
 class DomainDetailTabs(tabs.TabGroup):

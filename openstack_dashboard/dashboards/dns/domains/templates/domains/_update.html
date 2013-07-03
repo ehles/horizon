@@ -1,11 +1,12 @@
 {% extends "horizon/common/_modal_form.html" %}
 {% load i18n %}
 
-{% block form_id %}create_domain_form{% endblock %}
-{% block form_action %}{% url horizon:dns:domains:create %}{% endblock %}
-{% block form_attrs %}enctype="multipart/form-data"{% endblock %}
+{% block form_id %}update_domain_form{% endblock %}
+{% block form_action %}{% url horizon:dns:domains:update domain_id %}{% endblock %}
 
-{% block modal-header %}{% trans "Create Domain" %}{% endblock %}
+
+{% block modal_id %}update_domain_modal{% endblock %}
+{% block modal-header %}{% trans "Update Domain" %}{% endblock %}
 
 {% block modal-body %}
 <div class="left">
@@ -14,17 +15,15 @@
     </fieldset>
 </div>
 <div class="right">
-    <h3>{% trans "Description:" %}</h3>
-    <p>
-        {% trans "Specify an domain name, admin e-mail address and domain TTL." %}
-    </p>
+    <h3>{% trans "Description" %}:</h3>
+    <p>{% trans "From here you can modify different properties of an domain." %}</p>
 </div>
 {% endblock %}
 
 {% block modal-footer %}
   <input class="btn btn-primary pull-right"
          type="submit"
-         value="{% trans "Create Domain" %}" />
+         value="{% trans "Update Image" %}" />
   <a href="{% url horizon:dns:domains:index %}"
      class="btn secondary cancel close">{% trans "Cancel" %}</a>
 {% endblock %}

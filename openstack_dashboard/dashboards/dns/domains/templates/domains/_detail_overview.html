@@ -1,4 +1,4 @@
-{% load i18n parse_date %}
+{% load i18n sizeformat %}
 
 <h3>{% trans "Domain Overview" %}: {{domain.name }}</h3>
 
@@ -6,17 +6,41 @@
   <h4>{% trans "Info" %}</h4>
   <hr class="header_rule">
   <dl>
-    <dt>{% trans "ID" %}</dt>
-    <dd>{{ domain.id }}</dd>
-    <dt>{% trans "Name" %}</dt>
-    <dd>{{ domain.name }}</dd>
-    <dt>{% trans "Email" %}</dt>
-    <dd>{{ domain.email }}</dd>
-    <dt>{% trans "Serial" %}</dt>
-    <dd>{{ domain.serial }}</dd>
-    <dt>{% trans "Created" %}</dt>
-    <dd>{{ domain.created_at|parse_date }}</dd>
-    <dt>{% trans "Updated" %}</dt>
-    <dd>{{ domain.updated_at|parse_date }}</dd>
+    <dt>{% trans "Domain name" %}</dt>
+    <dd>{{ domain.name|default:_("None") }}</dd>
+    <dt>{% trans "Admin email" %}</dt>
+    <dd>{{ domain.admin|default:_("None") }}</dd>
+    <dt>{% trans "TTL" %}</dt>
+    <dd>{{ domain.ttl|default:_("Unknown")}}</dd>
   </dl>
+</div>
+
+<div class="specs row-fluid detail">
+  <h4>{% trans "Records" %}</h4>
+  <hr class="header_rule">
+
+  <table class="table table-bordered table-condensed table-hover">
+    <thead>
+      <tr>
+        <td>{% trans "Index" %}
+        <td>{% trans "Type" %}</td>
+        <td>{% trans "Name" %}</td>
+        <td>{% trans "Data" %}</td>
+        <td>{% trans "Priority" %}</td>
+        <td>{% trans "TTL" %}</td>
+      </tr>
+    </thead>
+    <tbody>
+      {% for record in records %}
+      <tr>
+        <td>{{ forloop.counter }}</td>
+        <td>{{ record.rec_type|default:_("None")|upper }}</td>
+        <td>{{ record.name|default:_("") }}</td>
+        <td>{{ record.data|default:_("")|upper }}</td>
+        <td>{{ record.priority|default:_("None")|upper }}</td>
+        <td>{{ record.ttl|default:_("None")|upper }}</td>
+      </tr>
+      {% endfor %}
+    </tbody>
+  </table>
 </div>

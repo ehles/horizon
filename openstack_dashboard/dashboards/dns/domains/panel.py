@@ -1,6 +1,8 @@
-# Copyright 2013 Hewlett-Packard Development Company, L.P.
+# vim: tabstop=4 shiftwidth=4 softtabstop=4
+
+# Copyright 2013 ASD Technologies, asdco.ru.
 #
-# Author: Kiall Mac Innes <kiall@hp.com>
+# Author: Denis Deryabin <dderyabin@asdco.ru>
 #
 # Licensed under the Apache License, Version 2.0 (the "License"); you may
 # not use this file except in compliance with the License. You may obtain

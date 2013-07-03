@@ -1,6 +1,8 @@
-# Copyright 2013 Hewlett-Packard Development Company, L.P.
+# vim: tabstop=4 shiftwidth=4 softtabstop=4
+
+# Copyright 2013 ASD Technologies, asdco.ru.
 #
-# Author: Kiall Mac Innes <kiall@hp.com>
+# Author: Denis Deryabin <dderyabin@asdco.ru>
 #
 # Licensed under the Apache License, Version 2.0 (the "License"); you may
 # not use this file except in compliance with the License. You may obtain
@@ -13,13 +15,60 @@
 # WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See the
 # License for the specific language governing permissions and limitations
 # under the License.
-from django.conf.urls.defaults import url, patterns
 
-from .views import IndexView, DetailView, CreateView
+from django.conf.urls.defaults import patterns, url
+
+from .views import (CreateServerView,
+                    UpdateServerView,
+                    IndexView,
+                    CreateView,
+                    UpdateView,
+                    DetailView,
+                    RecordsView,
+                    UpdateRecordView,
+                    CreateRecordView)
 
 
 urlpatterns = patterns('openstack_dashboard.dashboards.dns.domains.views',
-    url(r'^$', IndexView.as_view(), name='index'),
-    url(r'^create/$', CreateView.as_view(), name='create'),
-    url(r'^(?P<domain_id>[^/]+)/$', DetailView.as_view(), name='detail'),
+    #url(r'^domains/$', IndexView.as_view(), name='index'),
+
+    url(r'^$',
+        IndexView.as_view(),
+        name='index'),
+
+    # Domains
+    url(r'^create/$',
+        CreateView.as_view(),
+        name='create'),
+
+    url(r'^(?P<domain_id>[^/]+)/update/$',
+        UpdateView.as_view(),
+        name='update'),
+
+    url(r'^(?P<domain_id>[^/]+)/detail/$',
+        DetailView.as_view(),
+        name='detail'),
+
+    # Servers
+    url(r'^servers/create/$',
+        CreateServerView.as_view(),
+        name='server_create'),
+
+    url(r'^servers/(?P<server_id>[^/]+)/update/$',
+        UpdateServerView.as_view(),
+        name='server_update'),
+
+    # Records
+    url(r'^(?P<domain_id>[^/]+)/records/$',
+        RecordsView.as_view(),
+        name='records'),
+
+    url(r'^(?P<domain_id>[^/]+)/records/create/$',
+        CreateRecordView.as_view(),
+        name='record_create'),
+
+    url(r'^(?P<domain_id>[^/]+)/records/(?P<record_id>[^/]+)/update/$',
+        UpdateRecordView.as_view(),
+        name='record_update'),
+
 )
